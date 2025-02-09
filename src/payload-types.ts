@@ -13,6 +13,8 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    studies: Study;
+    categories: Category;
     'form-submission': FormSubmission;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -22,6 +24,8 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    studies: StudiesSelect<false> | StudiesSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
     'form-submission': FormSubmissionSelect<false> | FormSubmissionSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -97,6 +101,32 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "studies".
+ */
+export interface Study {
+  id: string;
+  title: string;
+  client: string;
+  location: string;
+  'service-provider': string;
+  image: string | Media;
+  studyCategory: string | Category;
+  slug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  category: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submission".
  */
 export interface FormSubmission {
@@ -121,6 +151,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'studies';
+        value: string | Study;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: string | Category;
       } | null)
     | ({
         relationTo: 'form-submission';
@@ -200,6 +238,30 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "studies_select".
+ */
+export interface StudiesSelect<T extends boolean = true> {
+  title?: T;
+  client?: T;
+  location?: T;
+  'service-provider'?: T;
+  image?: T;
+  studyCategory?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  category?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
